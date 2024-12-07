@@ -129,7 +129,6 @@ fi
 # Exibe o banner novamente
 print_banner
 
-# Copiando arquivos .env e server.js
 # Copiando arquivos .env, server.js e a pasta public
 echo -e "${GREEN}📦 Copiando arquivos .env, server.js e a pasta public...${NC}"
 
@@ -145,8 +144,9 @@ read overwrite_public_folder
 if [[ "$overwrite_public_folder" == "y" || "$overwrite_public_folder" == "Y" ]]; then
     echo -e "${CYAN}🔄 Sobrescrevendo a pasta '/backend/public'...${NC}"
 
-    # Copia a pasta /backend/public da pasta antiga para a nova
-    cp -r "$new_old_folder_name/backend/public" "$new_folder_name/backend/public"
+    # Garante que a estrutura correta da pasta destino seja usada
+    mkdir -p "$new_folder_name/backend" # Garante que a pasta backend existe
+    cp -r "$new_old_folder_name/backend/public" "$new_folder_name/backend/"
 
     # Aplica permissões 777 na pasta copiada
     sudo chmod -R 777 "$new_folder_name/backend/public"
@@ -155,7 +155,6 @@ if [[ "$overwrite_public_folder" == "y" || "$overwrite_public_folder" == "Y" ]];
 else
     echo -e "${YELLOW}⚠️ A pasta '/backend/public' não foi sobreescrita.${NC}"
 fi
-
 
 
 # Exibe o banner novamente
